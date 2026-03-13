@@ -1,0 +1,249 @@
+.doctors-section {
+  padding: var(--section-padding);
+  background: var(--slate-50);
+}
+
+.doctors-filters {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-search {
+  flex: 1;
+  min-width: 260px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  border: 1.5px solid var(--slate-100);
+  border-radius: var(--radius-full);
+  padding: 0 1.25rem;
+  gap: 0.75rem;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.filter-search:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(10, 61, 98, 0.08);
+}
+
+.filter-search-icon { color: var(--slate-300); }
+
+.filter-input {
+  flex: 1;
+  padding: 0.75rem 0;
+  border: none;
+  outline: none;
+  background: none;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--slate-700);
+}
+
+.filter-input::placeholder { color: var(--slate-300); }
+
+.filter-selects {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.filter-select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--white);
+  border: 1.5px solid var(--slate-100);
+  border-radius: var(--radius-full);
+  padding: 0 1rem;
+  color: var(--slate-400);
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-select {
+  padding: 0.7rem 0;
+  border: none;
+  outline: none;
+  background: none;
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  color: var(--slate-500);
+  cursor: pointer;
+}
+
+/* Doctor Cards */
+.doctors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem;
+  color: var(--slate-300);
+}
+
+.doctor-card {
+  background: var(--white);
+  border: 1px solid var(--slate-100);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-slow);
+}
+
+.doctor-card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+.doctor-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.doctor-avatar {
+  width: 58px;
+  height: 58px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.available-dot {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 12px;
+  height: 12px;
+  background: #2ecc71;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.doctor-name {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--slate-900);
+  margin-bottom: 0.2rem;
+}
+
+.doctor-designation {
+  font-size: 0.78rem;
+  color: var(--slate-400);
+  margin-bottom: 0.25rem;
+}
+
+.doctor-speciality {
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: var(--font-heading);
+}
+
+.doctor-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--slate-50);
+  border-bottom: 1px solid var(--slate-50);
+}
+
+.meta-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.meta-label {
+  font-size: 0.72rem;
+  color: var(--slate-300);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.meta-value {
+  font-size: 0.82rem;
+  color: var(--slate-600);
+  font-weight: 500;
+}
+
+.doctor-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.rating-stars {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #f39c12;
+}
+
+.rating-val {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--slate-700);
+}
+
+.rating-count {
+  font-size: 0.75rem;
+  color: var(--slate-300);
+}
+
+.avail-badge {
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+.avail-badge.avail {
+  background: rgba(46,204,113,0.1);
+  color: #27ae60;
+}
+
+.avail-badge.unavail {
+  background: rgba(231,76,60,0.08);
+  color: #e74c3c;
+}
+
+.doctor-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.doc-btn {
+  flex: 1;
+  justify-content: center;
+  font-size: 0.85rem;
+  padding: 0.6rem 1rem;
+}

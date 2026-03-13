@@ -1,0 +1,114 @@
+.specialities-section {
+  padding: var(--section-padding);
+  background: var(--white);
+}
+
+.section-header {
+  margin-bottom: 3rem;
+}
+
+.specialities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.spec-card {
+  background: var(--white);
+  border: 1px solid var(--slate-100);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  cursor: pointer;
+  transition: var(--transition-slow);
+  position: relative;
+  overflow: hidden;
+}
+
+.spec-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--spec-bg);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.spec-card:hover {
+  border-color: var(--spec-color);
+  box-shadow: var(--shadow-md);
+}
+
+.spec-card:hover::before {
+  opacity: 1;
+}
+
+.spec-icon-wrap {
+  width: 56px;
+  height: 56px;
+  background: var(--spec-bg);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--spec-color);
+  transition: var(--transition);
+  position: relative;
+  z-index: 1;
+}
+
+.spec-card:hover .spec-icon-wrap {
+  background: var(--spec-color);
+  color: white;
+  transform: scale(1.08);
+}
+
+.spec-content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+.spec-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--spec-color);
+  margin-bottom: 0.35rem;
+}
+
+.spec-name {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--slate-900);
+  margin-bottom: 0.5rem;
+}
+
+.spec-desc {
+  font-size: 0.82rem;
+  color: var(--slate-400);
+  line-height: 1.6;
+}
+
+.spec-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--spec-color);
+  transition: var(--transition);
+  position: relative;
+  z-index: 1;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--slate-100);
+}
+
+.spec-cta:hover {
+  gap: 0.6rem;
+}
