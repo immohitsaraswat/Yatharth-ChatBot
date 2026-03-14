@@ -306,14 +306,16 @@
 }
 
 .float-card-1 {
-  top: 15%;
-  left: -20%;
+  top: -8%;
+  right: -5%;
+  left: auto;
   animation: float 5s ease-in-out infinite alternate;
 }
 
 .float-card-2 {
-  bottom: 10%;
-  right: -15%;
+  bottom: -5%;
+  left: -15%;
+  right: auto;
   animation: float 7s ease-in-out infinite alternate-reverse;
 }
 
@@ -395,13 +397,15 @@
   }
 
   .float-card-1 {
-    top: -15px;
-    left: 0;
+    top: -25px;
+    right: 10px;
+    left: auto;
   }
 
   .float-card-2 {
-    bottom: -15px;
-    right: 0;
+    bottom: -25px;
+    left: 10px;
+    right: auto;
   }
 
   .stats-grid {
