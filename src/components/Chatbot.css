@@ -19,7 +19,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.25rem;
-  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  background: linear-gradient(135deg, #2c7a7b, #4fd1c5);
   color: var(--white);
   flex-shrink: 0;
 }
@@ -106,13 +106,13 @@
 .lang-select-icon {
   width: 72px;
   height: 72px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, #4fd1c5, #2c7a7b);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  box-shadow: 0 8px 24px rgba(10, 61, 98, 0.3);
+  box-shadow: 0 8px 24px rgba(56, 178, 172, 0.3);
 }
 
 .lang-select-title {
@@ -206,7 +206,7 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, #4fd1c5, #2c7a7b);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -234,7 +234,7 @@
 }
 
 .chat-msg-wrap.user .chat-msg-text {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, #2c7a7b, #4fd1c5);
   color: white;
   border-bottom-left-radius: var(--radius-md);
   border-bottom-right-radius: 4px;
@@ -383,7 +383,7 @@
 .chat-send-btn {
   width: 38px;
   height: 38px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, #4fd1c5, #2c7a7b);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -412,7 +412,7 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 4px solid var(--accent);
+  border: 4px solid #4fd1c5;
   animation: bubble-pulse 2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
   pointer-events: none;
 }
@@ -432,7 +432,7 @@
   right: 1.5rem;
   width: 64px;
   height: 64px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, #4fd1c5, #2c7a7b);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -440,18 +440,18 @@
   justify-content: center;
   z-index: 1000;
   cursor: pointer;
-  border: 3px solid rgba(255, 255, 255, 0.2);
+  border: 3px solid rgba(255, 255, 255, 0.4);
   box-shadow: 
-    0 10px 25px rgba(10, 61, 98, 0.4),
-    0 0 15px rgba(230, 126, 34, 0.5); /* Glowing accent shadow */
+    0 10px 25px rgba(44, 122, 123, 0.4),
+    0 0 15px rgba(79, 209, 197, 0.5); /* Glowing teal shadow */
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .chatbot-bubble:hover {
   transform: scale(1.1) translateY(-5px);
   box-shadow: 
-    0 15px 35px rgba(10, 61, 98, 0.5),
-    0 0 25px rgba(230, 126, 34, 0.8);
+    0 15px 35px rgba(44, 122, 123, 0.5),
+    0 0 25px rgba(79, 209, 197, 0.8);
 }
 
 
