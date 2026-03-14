@@ -1,12 +1,38 @@
-import { motion } from 'framer-motion'
-import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Youtube, Heart } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Youtube } from 'lucide-react'
 import './Footer.css'
 
 const footerLinks = {
-  'Quick Links': ['Home', 'About Us', 'Our Hospitals', 'Specialities', 'Find a Doctor', 'Book Appointment'],
-  'Specialities': ['Cardiac Sciences', 'Oncology', 'Neurosciences', 'Orthopaedics', 'Gastroenterology', 'Nephrology'],
-  'Patient Info': ['Online Lab Reports', 'International Patients', 'Insurance Partners', 'Patient Rights', 'Feedback', 'Careers'],
-  'Hospitals': ['Noida – Sector 110', 'Greater Noida', 'Noida Extension', 'Contact All'],
+  'Quick Links': [
+    { label: 'Home', to: '/' },
+    { label: 'About Us', to: '/about' },
+    { label: 'Facilities', to: '/facilities' },
+    { label: 'Specialities', to: '/#specialities' },
+    { label: 'Find a Doctor', to: '/#doctors' },
+    { label: 'Book Appointment', to: '/#booking' },
+  ],
+  'Specialities': [
+    { label: 'Cardiac Sciences', to: '/#specialities' },
+    { label: 'Oncology', to: '/#specialities' },
+    { label: 'Neurosciences', to: '/#specialities' },
+    { label: 'Orthopaedics', to: '/#specialities' },
+    { label: 'Gastroenterology', to: '/#specialities' },
+    { label: 'Nephrology', to: '/#specialities' },
+  ],
+  'Patient Info': [
+    { label: 'Online Lab Reports', to: '/lab-reports' },
+    { label: 'International Patients', to: '/#contact' },
+    { label: 'Insurance Partners', to: '/#contact' },
+    { label: 'Patient Rights', to: '/about' },
+    { label: 'Feedback', to: '/#contact' },
+    { label: 'Careers', to: '/careers' },
+  ],
+  'Hospitals': [
+    { label: 'Noida – Sector 110', to: '/#contact' },
+    { label: 'Greater Noida', to: '/#contact' },
+    { label: 'Noida Extension', to: '/#contact' },
+    { label: 'Contact Us', to: '/#contact' },
+  ],
 }
 
 export default function Footer() {
@@ -36,31 +62,27 @@ export default function Footer() {
               </div>
               <div className="footer-socials">
                 {[Facebook, Twitter, Linkedin, Youtube].map((Icon, i) => (
-                  <button key={i} onClick={() => alert('Social media profile link coming soon!')} className="social-link" aria-label="Social">
+                  <a key={i} href="#" className="social-link" aria-label="Social">
                     <Icon size={16} />
-                  </button>
+                  </a>
                 ))}
               </div>
             </div>
 
+            {/* Links Columns */}
             {Object.entries(footerLinks).map(([title, links]) => (
               <div key={title} className="footer-links-col">
                 <h4 className="footer-col-title">{title}</h4>
                 <ul>
-                  {links.map(link => {
-                    // Try to guess a reasonable anchor for the link, or fallback to top
-                    let href = '#home';
-                    const linkLower = link.toLowerCase();
-                    if (linkLower.includes('doctor')) href = '#doctors';
-                    if (linkLower.includes('special')) href = '#specialities';
-                    if (linkLower.includes('book') || linkLower.includes('contact')) href = '#booking';
-                    
-                    return (
-                      <li key={link}>
-                        <a href={href} className="footer-link">{link}</a>
-                      </li>
-                    );
-                  })}
+                  {links.map(link => (
+                    <li key={link.label}>
+                      {link.to.startsWith('/#') ? (
+                        <a href={link.to} className="footer-link">{link.label}</a>
+                      ) : (
+                        <Link to={link.to} className="footer-link">{link.label}</Link>
+                      )}
+                    </li>
+                  ))}
                 </ul>
               </div>
             ))}
@@ -95,9 +117,9 @@ export default function Footer() {
           <div className="footer-bottom-inner">
             <p>© 2025 Yatharth Hospital & Trauma Care – All rights reserved.</p>
             <div className="footer-legal-links">
-              <button className="text-muted" style={{background:'none',border:'none',color:'inherit',cursor:'pointer',fontSize:'0.9rem'}} onClick={() => alert('Privacy Policy coming soon')}>Privacy Policy</button>
-              <button className="text-muted" style={{background:'none',border:'none',color:'inherit',cursor:'pointer',fontSize:'0.9rem'}} onClick={() => alert('Terms of Use coming soon')}>Terms of Use</button>
-              <button className="text-muted" style={{background:'none',border:'none',color:'inherit',cursor:'pointer',fontSize:'0.9rem'}} onClick={() => alert('Sitemap coming soon')}>Sitemap</button>
+              <a href="#">Privacy Policy</a>
+              <a href="#">Terms of Use</a>
+              <a href="#">Sitemap</a>
             </div>
           </div>
         </div>

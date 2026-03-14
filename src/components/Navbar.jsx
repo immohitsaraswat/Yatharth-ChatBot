@@ -1,37 +1,52 @@
 import { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Phone, Menu, X, ChevronDown } from 'lucide-react'
 import './Navbar.css'
 
 const navLinks = [
-  {
-    label: 'About Us',
-    href: '#home',
-  },
+  { label: 'About Us', to: '/about' },
   {
     label: 'Specialities',
-    href: '#specialities',
+    to: '/#specialities',
     dropdown: [
       'Cardiac Sciences', 'Oncology', 'Neurosciences',
       'Orthopaedics', 'Nephrology & Urology', 'Gastroenterology',
       'GI Surgery & Liver Transplant', 'Robotic Surgery'
     ]
   },
-  { label: 'Find Doctors', href: '#doctors' },
-  { label: 'Facilities', href: '#home' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Find Doctors', to: '/#doctors' },
+  { label: 'Facilities', to: '/facilities' },
+  { label: 'Contact', to: '/#contact' },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState(null)
+  const location = useLocation()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Handle hash scrolling for same-page anchors
+  const handleNavClick = (to) => {
+    setMobileOpen(false)
+    if (to.startsWith('/#')) {
+      const id = to.replace('/#', '')
+      if (location.pathname === '/') {
+        const el = document.getElementById(id)
+        el?.scrollIntoView({ behavior: 'smooth' })
+      } else {
+        window.location.href = to
+      }
+    }
+  }
+
+  const isRoute = (to) => !to.startsWith('/#')
 
   return (
     <motion.header
@@ -51,9 +66,9 @@ export default function Navbar() {
               <span>24/7 Helpline: <strong>0120-4588000</strong></span>
             </div>
             <div className="topbar-right">
-              <a href="#" onClick={(e) => { e.preventDefault(); alert('Online Lab Reports portal is currently under maintenance. Please check back later.'); }} className="topbar-link">Online Lab Reports</a>
-              <a href="#contact" className="topbar-link">International Patients</a>
-              <a href="#contact" className="topbar-link">Careers</a>
+              <Link to="/lab-reports" className="topbar-link">Online Lab Reports</Link>
+              <Link to="/#contact" onClick={() => handleNavClick('/#contact')} className="topbar-link">International Patients</Link>
+              <Link to="/careers" className="topbar-link">Careers</Link>
             </div>
           </div>
         </div>
@@ -64,9 +79,9 @@ export default function Navbar() {
         <div className="container">
           <div className="nav-inner">
             {/* Logo */}
-            <a href="#home" className="nav-logo">
+            <Link to="/" className="nav-logo">
               <img src="/logo.svg" alt="Yatharth Hospitals" className="nav-logo-img" />
-            </a>
+            </Link>
 
             {/* Desktop Nav Links */}
             <nav className="nav-links">
@@ -77,10 +92,17 @@ export default function Navbar() {
                   onMouseEnter={() => link.dropdown && setActiveDropdown(link.label)}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <a href={link.href} className="nav-link">
-                    {link.label}
-                    {link.dropdown && <ChevronDown size={14} />}
-                  </a>
+                  {isRoute(link.to) ? (
+                    <Link to={link.to} className="nav-link">
+                      {link.label}
+                      {link.dropdown && <ChevronDown size={14} />}
+                    </Link>
+                  ) : (
+                    <a href={link.to} className="nav-link" onClick={(e) => { e.preventDefault(); handleNavClick(link.to) }}>
+                      {link.label}
+                      {link.dropdown && <ChevronDown size={14} />}
+                    </a>
+                  )}
                   <AnimatePresence>
                     {link.dropdown && activeDropdown === link.label && (
                       <motion.div
@@ -91,7 +113,7 @@ export default function Navbar() {
                         transition={{ duration: 0.18 }}
                       >
                         {link.dropdown.map((item) => (
-                          <a key={item} href="#specialities" className="dropdown-item">{item}</a>
+                          <a key={item} href="/#specialities" className="dropdown-item" onClick={(e) => { e.preventDefault(); handleNavClick('/#specialities') }}>{item}</a>
                         ))}
                       </motion.div>
                     )}
@@ -102,9 +124,9 @@ export default function Navbar() {
 
             {/* CTA */}
             <div className="nav-actions">
-              <a href="#booking" className="btn btn-primary nav-cta" id="nav-book-btn">
+              <Link to="/#booking" onClick={() => handleNavClick('/#booking')} className="btn btn-primary nav-cta" id="nav-book-btn">
                 Book Appointment
-              </a>
+              </Link>
               <button
                 className="nav-mobile-toggle"
                 onClick={() => setMobileOpen(!mobileOpen)}
@@ -128,14 +150,20 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
           >
             <div className="container">
-              {navLinks.map((link) => (
-                <a key={link.label} href={link.href} className="mobile-link" onClick={() => setMobileOpen(false)}>
-                  {link.label}
-                </a>
-              ))}
-              <a href="#booking" className="btn btn-primary mobile-cta" onClick={() => setMobileOpen(false)}>
+              {navLinks.map((link) =>
+                isRoute(link.to) ? (
+                  <Link key={link.label} to={link.to} className="mobile-link" onClick={() => setMobileOpen(false)}>
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a key={link.label} href={link.to} className="mobile-link" onClick={(e) => { e.preventDefault(); handleNavClick(link.to) }}>
+                    {link.label}
+                  </a>
+                )
+              )}
+              <Link to="/#booking" onClick={() => handleNavClick('/#booking')} className="btn btn-primary mobile-cta">
                 Book Appointment
-              </a>
+              </Link>
             </div>
           </motion.div>
         )}

@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Calendar, User, Phone, Mail, ChevronRight, CheckCircle, Stethoscope } from 'lucide-react'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { db } from '../firebase'
 import './BookingForm.css'
 
 const specialities = [
@@ -31,12 +33,12 @@ export default function BookingForm() {
   const handleSubmit = async () => {
     setLoading(true)
     try {
-      const res = await fetch('/api/book', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, source: 'form' })
+      await addDoc(collection(db, 'appointments'), {
+        ...form,
+        source: 'website_form',
+        createdAt: serverTimestamp(),
+        status: 'pending'
       })
-      if (!res.ok) throw new Error('Failed to book')
       setSubmitted(true)
     } catch (e) {
       alert('Error booking appointment. Please try again.')
