@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Specialities from './components/Specialities'
@@ -24,6 +25,21 @@ function HomePage() {
 }
 
 export default function App() {
+  // Global haptic feedback for mobile optimization
+  useEffect(() => {
+    const handleHaptic = (e) => {
+      const target = e.target.closest('button, a, .interactive-card, .spec-chip, .time-slot')
+      if (target) {
+        if (typeof window !== 'undefined' && window.navigator && window.navigator.vibrate) {
+          window.navigator.vibrate(40) // 40ms light haptic feedback
+        }
+      }
+    }
+    
+    document.addEventListener('click', handleHaptic, { passive: true })
+    return () => document.removeEventListener('click', handleHaptic)
+  }, [])
+
   return (
     <BrowserRouter>
       <ScrollToTop />

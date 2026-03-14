@@ -179,9 +179,12 @@
 
 /* Mobile Menu */
 .mobile-menu {
-  background: var(--white);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border-top: 1px solid var(--slate-100);
   overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 .mobile-menu .container {
