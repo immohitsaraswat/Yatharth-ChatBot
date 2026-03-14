@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MessageCircle, X, Send, Bot, User, Calendar, AlertCircle, Minimize2, Globe } from 'lucide-react'
+import { MessageCircle, X, Send, Bot, User, Calendar, AlertCircle, Minimize2, Globe, Stethoscope } from 'lucide-react'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase'
 import './Chatbot.css'
@@ -372,11 +372,10 @@ export default function Chatbot() {
             </motion.div>
           ) : (
             <motion.div key="open" initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.5, opacity: 0 }}>
-              <MessageCircle size={24} />
+              <Stethoscope size={24} />
             </motion.div>
           )}
         </AnimatePresence>
-        {!open && <span className="bubble-badge">AI</span>}
       </motion.button>
     </>
   )
