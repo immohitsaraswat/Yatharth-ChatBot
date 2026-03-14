@@ -216,7 +216,7 @@ export default function Chatbot() {
             <div className="chat-header">
               <div className="chat-header-info">
                 <div className="chat-avatar">
-                  <img src="/assets/nat.png" alt="nat" className="chat-avatar-img" />
+                  <img src="/nat.png" alt="nat" className="chat-avatar-img" />
                   <span className="chat-online-dot" />
                 </div>
                 <div>
@@ -275,7 +275,7 @@ export default function Chatbot() {
                     <div key={i} className={`chat-msg-wrap ${msg.role}`}>
                       {msg.role === 'assistant' && (
                         <div className="chat-msg-avatar">
-                          <img src="/assets/nat.png" alt="nat" />
+                          <img src="/nat.png" alt="nat" />
                         </div>
                       )}
                       <div className="chat-msg">
@@ -296,7 +296,7 @@ export default function Chatbot() {
                   {loading && (
                     <div className="chat-msg-wrap assistant">
                       <div className="chat-msg-avatar">
-                        <img src="/assets/nat.png" alt="nat" />
+                        <img src="/nat.png" alt="nat" />
                       </div>
                       <div className="chat-msg">
                         <div className="chat-typing"><span /><span /><span /></div>
@@ -376,7 +376,7 @@ export default function Chatbot() {
             </motion.div>
           ) : (
             <motion.div key="open" initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.5, opacity: 0 }}>
-              <img src="/assets/nat.png" alt="nat" className="bubble-icon-img" />
+              <img src="/nat.png" alt="nat" className="bubble-icon-img" />
             </motion.div>
           )}
         </AnimatePresence>
