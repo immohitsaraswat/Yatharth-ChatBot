@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Search, Calendar, ChevronRight, Heart, Shield, Clock, Award } from 'lucide-react'
+import { Search, Calendar, ChevronRight, Heart, Shield, Clock, Award, PhoneCall } from 'lucide-react'
 import './Hero.css'
 
 const stats = [
@@ -109,27 +109,31 @@ export default function Hero() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, delay: 0.2 }}
         >
-          <div className="hero-card glass-card">
-            <div className="hero-card-header">
-              <div className="card-avatar">
-                <Heart size={22} />
+          <div className="hero-card glass-card emergency-widget">
+            <div className="emergency-header">
+              <div className="emergency-icon-wrapper">
+                <div className="emergency-pulse-ring"></div>
+                <PhoneCall size={24} className="emergency-icon" />
               </div>
               <div>
-                <div className="card-name">Dr. Priya Sharma</div>
-                <div className="card-spec">Cardiologist · Noida</div>
+                <div className="card-name text-red">24/7 Emergency Care</div>
+                <div className="card-spec">Rapid Response Ambulance Support</div>
               </div>
-              <div className="card-badge online">Available</div>
             </div>
-            <div className="hero-card-slots">
-              <div className="slot-label">Next available slots</div>
-              <div className="slots-grid">
-                <button className="slot active" id="slot-1">10:30 AM</button>
-                <button className="slot" id="slot-2">12:00 PM</button>
-                <button className="slot" id="slot-3">3:30 PM</button>
-                <button className="slot" id="slot-4">5:00 PM</button>
+            
+            <div className="emergency-lines">
+              <div className="helpline">
+                <span className="helpline-label">Emergency Helpline:</span>
+                <span className="helpline-number">+91 9810059005</span>
               </div>
-              <a href="#booking" className="btn btn-primary w-full" style={{justifyContent:'center', marginTop:'0.75rem'}} id="card-book-btn">
-                Confirm Booking
+              <div className="helpline">
+                <span className="helpline-label">24/7 Support:</span>
+                <span className="helpline-number">0120-4588000</span>
+              </div>
+              
+              <a href="tel:+919810059005" className="btn btn-emergency w-full">
+                <PhoneCall size={18} />
+                Call Ambulance Now
               </a>
             </div>
           </div>
