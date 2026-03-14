@@ -442,8 +442,9 @@
 
 .bubble-badge {
   position: absolute;
-  top: -4px;
-  right: -4px;
+  top: 0;
+  right: 0;
+  transform: translate(20%, -20%);
   background: linear-gradient(135deg, var(--accent), var(--accent-light));
   color: white;
   font-family: var(--font-heading);
