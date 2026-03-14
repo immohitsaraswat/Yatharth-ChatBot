@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X, Send, Bot, User, Calendar, AlertCircle, Minimize2, Globe } from 'lucide-react'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { db } from '../firebase'
 import './Chatbot.css'
 
 const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY || ''
@@ -166,12 +168,14 @@ export default function Chatbot() {
     
     // Attempt saving to DB
     try {
-      const res = await fetch('/api/book', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...bookingData, source: 'chatbot' })
+      await addDoc(collection(db, 'appointments'), {
+        name: bookingData.name || '',
+        phone: bookingData.phone || '',
+        speciality: bookingData.speciality || '',
+        location: bookingData.location || '',
+        source: 'chatbot',
+        createdAt: serverTimestamp()
       })
-      if (!res.ok) throw new Error('API Error')
       
       const successMsg = lang === 'hi' 
         ? '🎉 अपॉइंटमेंट सफलतापूर्वक बुक हो गई है! हम आपको जल्द ही कॉल करेंगे।'

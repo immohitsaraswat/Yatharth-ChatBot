@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { FileText, Search, Download, ShieldCheck, Lock, AlertCircle } from 'lucide-react'
+import { FileText, Search, Download, ShieldCheck, Lock, AlertCircle, Loader } from 'lucide-react'
+import { collection, query, where, getDocs } from 'firebase/firestore'
+import { db } from '../firebase'
 import './LabReports.css'
 
 const fadeUp = {
@@ -13,19 +15,39 @@ export default function LabReports() {
   const [patientId, setPatientId] = useState('')
   const [phone, setPhone] = useState('')
 
-  const handleSearch = (e) => {
+  const [loading, setLoading] = useState(false)
+  const [reports, setReports] = useState([])
+  const [error, setError] = useState('')
+
+  const handleSearch = async (e) => {
     e.preventDefault()
-    if (patientId.trim() && phone.trim()) {
+    if (!patientId.trim() || !phone.trim()) return
+
+    setLoading(true)
+    setError('')
+    
+    try {
+      const q = query(
+        collection(db, 'lab_reports'),
+        where('patientId', '==', patientId),
+        where('phone', '==', phone)
+      )
+      
+      const querySnapshot = await getDocs(q)
+      const fetchedReports = []
+      querySnapshot.forEach((doc) => {
+        fetchedReports.push({ id: doc.id, ...doc.data() })
+      })
+
+      setReports(fetchedReports)
       setStep('results')
+    } catch (err) {
+      console.error("Error fetching reports:", err)
+      setError('Failed to fetch reports. Please try again later.')
+    } finally {
+      setLoading(false)
     }
   }
-
-  const sampleReports = [
-    { id: 'RPT-2024-0891', test: 'Complete Blood Count (CBC)', date: '12 Mar 2024', status: 'Ready' },
-    { id: 'RPT-2024-0890', test: 'Lipid Profile', date: '12 Mar 2024', status: 'Ready' },
-    { id: 'RPT-2024-0887', test: 'Liver Function Test (LFT)', date: '10 Mar 2024', status: 'Ready' },
-    { id: 'RPT-2024-0882', test: 'Thyroid Profile (T3, T4, TSH)', date: '08 Mar 2024', status: 'Ready' },
-  ]
 
   return (
     <section className="lab-page">
@@ -57,10 +79,12 @@ export default function LabReports() {
                   <label>Registered Mobile Number</label>
                   <input type="tel" placeholder="+91 XXXXX XXXXX" value={phone} onChange={e => setPhone(e.target.value)} required />
                 </div>
-                <motion.button type="submit" className="btn btn-primary lab-search-btn" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                  <Search size={16} /> Search Reports
+                <motion.button type="submit" className="btn btn-primary lab-search-btn" disabled={loading} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                  {loading ? <Loader className="spin" size={16} /> : <Search size={16} />} 
+                  {loading ? 'Searching...' : 'Search Reports'}
                 </motion.button>
               </form>
+              {error && <p className="error-text" style={{ color: 'var(--danger)', marginTop: '1rem', fontSize: '0.9rem' }}>{error}</p>}
               <p className="lab-note"><AlertCircle size={13} /> For assistance, call <strong>0120-4588000</strong></p>
             </motion.div>
           )}
@@ -77,20 +101,30 @@ export default function LabReports() {
                 </button>
               </div>
               <div className="lab-reports-list">
-                {sampleReports.map((r, i) => (
-                  <motion.div key={r.id} className="lab-report-item" initial="hidden" animate="visible" custom={i} variants={fadeUp}>
-                    <div className="report-icon"><FileText size={20} /></div>
-                    <div className="report-info">
-                      <h4>{r.test}</h4>
-                      <span className="report-meta">{r.id} · {r.date}</span>
-                    </div>
-                    <span className="report-status">{r.status}</span>
-                    <motion.button className="btn btn-primary report-download-btn" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                      onClick={() => alert(`Demo: Downloading ${r.test} report. In production, this would fetch the actual PDF from Firebase Storage.`)}>
-                      <Download size={14} /> Download
-                    </motion.button>
-                  </motion.div>
-                ))}
+                {reports.length === 0 ? (
+                  <div className="no-reports-msg" style={{ padding: '2rem', textAlign: 'center', color: 'var(--slate-500)' }}>
+                    No reports found for this Patient ID and combination.
+                  </div>
+                ) : (
+                  reports.map((r, i) => (
+                    <motion.div key={r.id} className="lab-report-item" initial="hidden" animate="visible" custom={i} variants={fadeUp}>
+                      <div className="report-icon"><FileText size={20} /></div>
+                      <div className="report-info">
+                        <h4>{r.testName || 'Lab Report'}</h4>
+                        <span className="report-meta">{r.reportId || r.id} · {r.date || 'Recent'}</span>
+                      </div>
+                      <span className="report-status">{r.status || 'Ready'}</span>
+                      <motion.button 
+                        className="btn btn-primary report-download-btn" 
+                        whileHover={{ scale: 1.05 }} 
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => window.open(r.fileUrl || '#', '_blank')}
+                      >
+                        <Download size={14} /> Download
+                      </motion.button>
+                    </motion.div>
+                  ))
+                )}
               </div>
               <p className="lab-disclaimer">
                 <ShieldCheck size={13} /> Reports are encrypted end-to-end. Only registered patients can access their reports.
