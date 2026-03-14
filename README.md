@@ -2,7 +2,7 @@
 
 A premium, modern web application for Yatharth Hospitals, featuring an advanced AI-powered health assistant named **"nat"**. This project is a comprehensive upgrade of the traditional hospital website, focusing on premium UI/UX, proactive patient interaction, and seamless information access.
 
-![nat Mascot Logo](/public/nat.png)
+![nat Mascot Logo](public/nat.png)
 
 ## 🩺 Meet "nat" - Your Personal Health Assistant
 **nat** is a professional 3D medical mascot (kitten in scrubs) designed to help patients navigate hospital services.
