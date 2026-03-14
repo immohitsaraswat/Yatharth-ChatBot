@@ -8,7 +8,7 @@ import './Chatbot.css'
 const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY || ''
 
 // ─── System Prompt ────────────────────────────────────────────────────────────
-const buildSystemPrompt = (lang) => `You are "Yatharth Nurse Assistant", a friendly and professional medical assistant for Yatharth Hospitals — a super-speciality hospital chain in Delhi NCR.
+const buildSystemPrompt = (lang) => `You are "nat", a friendly and professional medical assistant (represented as a cute nurse kitten) for Yatharth Hospitals — a super-speciality hospital chain in Delhi NCR.
 
 The user has chosen to converse in: ${lang === 'hi' ? 'HINDI. Always respond fully in Hindi (Devanagari script). Use respectful/formal tone.' : 'ENGLISH. Always respond in clear, warm English.'}
 
@@ -106,8 +106,8 @@ export default function Chatbot() {
   const chooseLang = (chosen) => {
     setLang(chosen)
     const greeting = chosen === 'hi'
-      ? '👋 नमस्ते! मैं **यथार्थ नर्स सहायक** हूँ, आपकी व्यक्तिगत स्वास्थ्य सहायक।\n\nमैं आपकी अपॉइंटमेंट बुक करने, डॉक्टर खोजने और यथार्थ हॉस्पिटल की जानकारी देने में मदद कर सकता हूँ। आप क्या जानना चाहते हैं?'
-      : '👋 Hello! I\'m **Yatharth Nurse Assistant**, your personal health assistant.\n\nI can help you book appointments, find doctors, and answer questions about Yatharth Hospitals. How can I help you today?'
+      ? '👋 नमस्ते! मैं **nat** हूँ, आपकी व्यक्तिगत स्वास्थ्य सहायक।\n\nमैं आपकी अपॉइंटमेंट बुक करने, डॉक्टर खोजने और यथार्थ हॉस्पिटल की जानकारी देने में मदद कर सकता हूँ। आप क्या जानना चाहते हैं?'
+      : '👋 Hello! I\'m **nat**, your personal health assistant.\n\nI can help you book appointments, find doctors, and answer questions about Yatharth Hospitals. How can I help you today?'
     setMessages([{ role: 'assistant', content: greeting, time: new Date() }])
   }
 
@@ -216,14 +216,14 @@ export default function Chatbot() {
             <div className="chat-header">
               <div className="chat-header-info">
                 <div className="chat-avatar">
-                  <Bot size={20} />
+                  <img src="/assets/nat.png" alt="nat" className="chat-avatar-img" />
                   <span className="chat-online-dot" />
                 </div>
                 <div>
-                  <div className="chat-name">Nurse Assistant</div>
+                  <div className="chat-name">nat</div>
                   <div className="chat-status">
                     {lang
-                      ? (lang === 'hi' ? 'ऑनलाइन · नर्स सहायक' : 'Online · Nurse Assistant')
+                      ? (lang === 'hi' ? 'ऑनलाइन · नैट' : 'Online · nat')
                       : 'Choose your language'}
                   </div>
                 </div>
@@ -274,7 +274,9 @@ export default function Chatbot() {
                   {messages.map((msg, i) => (
                     <div key={i} className={`chat-msg-wrap ${msg.role}`}>
                       {msg.role === 'assistant' && (
-                        <div className="chat-msg-avatar"><Bot size={14} /></div>
+                        <div className="chat-msg-avatar">
+                          <img src="/assets/nat.png" alt="nat" />
+                        </div>
                       )}
                       <div className="chat-msg">
                         <div
@@ -293,7 +295,9 @@ export default function Chatbot() {
 
                   {loading && (
                     <div className="chat-msg-wrap assistant">
-                      <div className="chat-msg-avatar"><Bot size={14} /></div>
+                      <div className="chat-msg-avatar">
+                        <img src="/assets/nat.png" alt="nat" />
+                      </div>
                       <div className="chat-msg">
                         <div className="chat-typing"><span /><span /><span /></div>
                       </div>
@@ -372,7 +376,7 @@ export default function Chatbot() {
             </motion.div>
           ) : (
             <motion.div key="open" initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.5, opacity: 0 }}>
-              <UserRound size={24} />
+              <img src="/assets/nat.png" alt="nat" className="bubble-icon-img" />
             </motion.div>
           )}
         </AnimatePresence>
