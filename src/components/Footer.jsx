@@ -44,7 +44,7 @@ export default function Footer() {
             {/* Brand Column */}
             <div className="footer-brand">
               <div className="footer-logo">
-                <img src="/logo.svg" alt="Yatharth Hospitals" className="footer-logo-img" />
+                <img src="/assets/images/footer-logo-official-v2.png" alt="Yatharth Hospitals" className="footer-logo-img" />
               </div>
               <p className="footer-about">
                 A leading super-speciality hospital chain providing world-class medical care across Delhi NCR since 2008. NABH accredited, JCI candidate.

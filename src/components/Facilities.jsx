@@ -31,8 +31,10 @@ export default function Facilities() {
     <section className="facilities-page">
       <div className="facilities-hero">
         <motion.div className="container" initial="hidden" animate="visible" variants={fadeUp}>
-          <h1>World-Class Facilities</h1>
-          <p>Cutting-edge medical infrastructure designed for precision, safety, and patient comfort.</p>
+          <div className="section-header">
+            <h1 className="section-title">World-Class <span className="gradient-text">Facilities</span></h1>
+            <p className="section-subtitle">Cutting-edge medical infrastructure designed for precision, safety, and patient comfort.</p>
+          </div>
         </motion.div>
       </div>
 

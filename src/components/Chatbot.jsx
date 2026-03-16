@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
 import { MessageCircle, X, Send, Bot, User, Calendar, AlertCircle, Minimize2, Globe, Stethoscope, UserRound } from 'lucide-react'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase'
@@ -7,30 +7,36 @@ import './Chatbot.css'
 
 const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY || ''
 
-// ─── System Prompt ────────────────────────────────────────────────────────────
-const buildSystemPrompt = (lang) => `You are "nat", a friendly and professional medical assistant (represented as a cute nurse kitten) for Yatharth Hospitals — a super-speciality hospital chain in Delhi NCR.
-
-The user has chosen to converse in: ${lang === 'hi' ? 'HINDI. Always respond fully in Hindi (Devanagari script). Use respectful/formal tone.' : 'ENGLISH. Always respond in clear, warm English.'}
-
-Your capabilities:
-1. INFORMATION: Hospital services, specialities, locations, visiting hours, emergency contacts, insurance.
-2. DOCTOR LOOKUP: Help find the right specialist — ask about symptoms or type of care.
-3. APPOINTMENT BOOKING: Collect: full name, mobile number, speciality, location (Noida / Greater Noida / Noida Extension), preferred date & time. When all info is collected, output ONLY a special JSON: {"action":"book","name":"...","phone":"...","speciality":"...","location":"...","date":"...","time":"..."}
-4. PATIENT SUPPORT: FAQs, general health info (always remind to consult a doctor for medical decisions).
-
-Hospital Info:
-- Locations: Noida – Sector 110 | Greater Noida – Omicron-I | Noida Extension – Crossing Republik
-- Emergency: +91 9810059005 (24/7) | Helpline: 0120-4588000
-- Specialities: Cardiac Sciences, Oncology, Neurosciences, Orthopaedics, GI Surgery & Liver Transplant, Nephrology & Urology, Gastroenterology, Ophthalmology, Paediatrics, Robotic Surgery, Bariatric Surgery, Cochlear Implants
-- OPD Hours: 9 AM–7 PM | Visiting Hours: 10 AM–8 PM | ICU: Restricted
-- Accreditation: NABH | International Patient services available
-- Online Lab Reports, Health Packages, Blood Bank, 24/7 Pharmacy available
-
-Instructions:
-- Be warm, empathetic, and concise. Use bullet points for readability.
-- Collect booking info step by step — never ask for everything at once.
-- IMPORTANT: When you have ALL booking details, output ONLY the JSON block. Do NOT include any conversational text like "Here is your JSON" or markdown backticks. Output purely the JSON object.
-- Never diagnose. Always refer to specialists for medical decisions.`
+// ─── Specialized Agent Personas ──────────────────────────────────────────────
+const AGENTS = {
+  router: {
+    prompt: (lang) => `You are the Task Router for "nat" (the medical kitten assistant).
+    Analyze the user's message and categorize it into ONE of these:
+    - BOOKING: User wants to schedule an appointment or provides booking details.
+    - INFO: User asks about doctors, specialities, hospital locations, or hours.
+    - EMERGENCY: User reports a medical emergency or urgent pain.
+    - SUPPORT: General help, greeting, or misc questions.
+    
+    Output ONLY the category name in uppercase.`
+  },
+  booking: {
+    prompt: (lang) => `You are the Booking Specialist "nat". 
+    Goal: Collect: Name, Mobile, Speciality, Location (Noida/Gr. Noida), Date & Time.
+    Language: ${lang === 'hi' ? 'HINDI' : 'ENGLISH'}.
+    Collect info step-by-step. Once complete, output ONLY the JSON: {"action":"book", ...}`
+  },
+  info: {
+    prompt: (lang) => `You are the Hospital Expert "nat".
+    Goal: Provide info on specialities (Cardiac, Oncology, etc.), doctors, and facilities.
+    Language: ${lang === 'hi' ? 'HINDI' : 'ENGLISH'}.
+    Hospital helpline: 0120-4588000.`
+  },
+  emergency: {
+    prompt: (lang) => `You are the Emergency Responder "nat". 
+    Goal: Provide IMMEDIATE emergency contacts. +91 9810059005 (24/7).
+    Refer to ambulance services. Priority is speed and clarity.`
+  }
+}
 
 // ─── Quick Replies ────────────────────────────────────────────────────────────
 const quickRepliesEn = [
@@ -42,7 +48,6 @@ const quickRepliesHi = [
   '🏥 अस्पताल के स्थान', '📞 इमरजेंसी नंबर', '⏰ मिलने का समय',
 ]
 
-// ─── SMS/Email Sender Removed Temporarily ───────────────────────────────────────
 // ─── Groq API ────────────────────────────────────────────────────────────────
 async function callGroq(messages) {
   const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -66,33 +71,30 @@ async function callGroq(messages) {
   return data.choices[0].message.content
 }
 
-// ─── Demo fallback ────────────────────────────────────────────────────────────
-function getDemoResponse(userMsg, lang) {
-  const msg = userMsg.toLowerCase()
-  if (lang === 'hi') {
-    if (msg.includes('book') || msg.includes('अपॉइंटमेंट'))
-      return 'अपॉइंटमेंट बुक करने के लिए कृपया बताएं:\n1. आपका पूरा नाम\n2. मोबाइल नंबर\n3. किस विभाग में अपॉइंटमेंट चाहिए?'
-    if (msg.includes('emergency') || msg.includes('इमरजेंसी'))
-      return '🚨 **इमरजेंसी नंबर**: +91 9810059005 (24/7)\n📞 **हेल्पलाइन**: 0120-4588000'
-    return 'यथार्थ हॉस्पिटल में आपका स्वागत है! मैं आपकी सहायता के लिए यहाँ हूँ।\n\n*(नोट: पूर्ण AI उत्तरों के लिए Dashboard में API key डालें)*'
-  }
-  if (msg.includes('book') || msg.includes('appointment'))
-    return "I'd be happy to help you book an appointment! Please tell me:\n1. Your full name\n2. Your mobile number\n3. Which speciality do you need?"
-  if (msg.includes('emergency'))
-    return '🚨 **Emergency**: +91 9810059005 (24/7)\n📞 **Helpline**: 0120-4588000'
-  return "Welcome to Yatharth Hospitals! I can help with:\n• 📅 Booking appointments\n• 🔍 Finding doctors\n• 🏥 Hospital info\n\n*(Note: Add API key in .env for full AI responses!)*"
+async function callAgent(agentType, messages, lang) {
+  const systemPrompt = AGENTS[agentType].prompt(lang);
+  const res = await callGroq([
+    { role: 'system', content: systemPrompt },
+    ...messages
+  ]);
+  return res;
 }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function Chatbot() {
   const [open, setOpen] = useState(false)
-  const [lang, setLang] = useState(null)   // null = language not chosen yet
+  const [lang, setLang] = useState(null)
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [bookingData, setBookingData] = useState(null)
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
+
+  // Scroll parallax for bubble
+  const { scrollYProgress } = useScroll()
+  const yMove = useTransform(scrollYProgress, [0, 1], [0, -40])
+  const springY = useSpring(yMove, { stiffness: 100, damping: 30 })
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -113,7 +115,6 @@ export default function Chatbot() {
 
   const parseBookingJSON = (text) => {
     try {
-      // First, let's strip out markdown backticks if the AI added them
       const cleanText = text.replace(/```json/g, '').replace(/```/g, '')
       const match = cleanText.match(/\{[\s\S]*?"action"\s*:\s*"book"[\s\S]*?\}/)
       if (match) return JSON.parse(match[0])
@@ -133,20 +134,22 @@ export default function Chatbot() {
     setMessages(newMessages)
     setLoading(true)
 
-    const apiMessages = [
-      { role: 'system', content: buildSystemPrompt(lang) },
-      ...newMessages.map(m => ({ role: m.role, content: m.content })),
-    ]
-
     try {
-      const responseText = GROQ_API_KEY
-        ? await callGroq(apiMessages)
-        : getDemoResponse(userText, lang)
+      // 1. CALL ROUTER AGENT
+      const intent = await callAgent('router', [{ role: 'user', content: userText }], lang);
+      console.log("Detected Intent:", intent);
+
+      // 2. DELEGATE TO SPECIALIZED AGENT
+      let agentType = 'info';
+      if (intent.includes('BOOKING')) agentType = 'booking';
+      else if (intent.includes('INFO')) agentType = 'info';
+      else if (intent.includes('EMERGENCY')) agentType = 'emergency';
+
+      const responseText = await callAgent(agentType, newMessages, lang);
 
       const booking = parseBookingJSON(responseText)
       if (booking) {
         setBookingData(booking)
-
         const displayText = responseText.replace(/\{[\s\S]*?"action"\s*:\s*"book"[\s\S]*?\}/, '').trim() ||
           (lang === 'hi' ? '✅ आपकी अपॉइंटमेंट तैयार है! नीचे Confirm करें।' : '✅ Your appointment details are ready! Click Confirm below.')
         setMessages(prev => [...prev, { role: 'assistant', content: displayText, time: new Date() }])
@@ -155,8 +158,8 @@ export default function Chatbot() {
       }
     } catch (e) {
       const errMsg = lang === 'hi'
-        ? '⚠️ कनेक्शन में समस्या हुई। कृपया **0120-4588000** पर कॉल करें।'
-        : '⚠️ Connection issue. Please try again or call **0120-4588000**.'
+        ? '⚠️ कनेक्शन में समस्या हुई।'
+        : '⚠️ Connection issue.'
       setMessages(prev => [...prev, { role: 'assistant', content: errMsg, time: new Date() }])
     } finally {
       setLoading(false)
@@ -365,6 +368,7 @@ export default function Chatbot() {
         className="chatbot-bubble"
         id="chatbot-bubble-btn"
         onClick={() => setOpen(!open)}
+        style={{ y: springY }}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
         aria-label="Open Nurse Assistant"

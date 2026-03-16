@@ -31,6 +31,11 @@ export default function BookingForm() {
   }
 
   const handleSubmit = async () => {
+    if (!form.name || !form.phone || !form.speciality) {
+      alert('Please complete all required fields.')
+      return
+    }
+
     setLoading(true)
     try {
       await addDoc(collection(db, 'appointments'), {
@@ -41,8 +46,8 @@ export default function BookingForm() {
       })
       setSubmitted(true)
     } catch (e) {
-      alert('Error booking appointment. Please try again.')
-      console.error(e)
+      console.error('Booking Error:', e)
+      alert('We encountered an issue while booking your appointment. Please call direct at 0120-4588000.')
     } finally {
       setLoading(false)
     }

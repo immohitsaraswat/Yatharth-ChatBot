@@ -1,6 +1,8 @@
 .specialities-section {
   padding: var(--section-padding);
-  background: var(--white);
+  background: radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+              var(--primary);
+  position: relative;
 }
 
 .section-header {
@@ -14,35 +16,36 @@
 }
 
 .spec-card {
-  background: var(--white);
-  border: 1px solid var(--slate-100);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
   cursor: pointer;
   transition: var(--transition-slow);
   position: relative;
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .spec-card::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--spec-bg);
+  background: linear-gradient(135deg, var(--spec-bg) 0%, transparent 100%);
   opacity: 0;
   transition: var(--transition);
 }
 
 .spec-card:hover {
+  transform: translateY(-8px);
   border-color: var(--spec-color);
-  box-shadow: var(--shadow-md);
-}
-
-.spec-card:hover::before {
-  opacity: 1;
+  background: var(--glass-bg-hover);
+  box-shadow: var(--shadow-lg);
 }
 
 .spec-icon-wrap {
@@ -82,15 +85,15 @@
 
 .spec-name {
   font-family: var(--font-heading);
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: var(--slate-900);
+  color: var(--white);
   margin-bottom: 0.5rem;
 }
 
 .spec-desc {
-  font-size: 0.82rem;
-  color: var(--slate-400);
+  font-size: 0.88rem;
+  color: var(--slate-300);
   line-height: 1.6;
 }
 
@@ -105,8 +108,8 @@
   transition: var(--transition);
   position: relative;
   z-index: 1;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--slate-100);
+  padding-top: 1rem;
+  border-top: 1px solid var(--glass-border);
 }
 
 .spec-cta:hover {

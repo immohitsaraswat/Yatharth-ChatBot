@@ -20,12 +20,12 @@ const values = [
 ]
 
 const stats = [
-  { num: '15+', label: 'Years of Excellence' },
-  { num: '500+', label: 'Expert Doctors' },
-  { num: '1M+', label: 'Patients Treated' },
-  { num: '3', label: 'Hospital Locations' },
-  { num: '50+', label: 'Specialities' },
-  { num: '24/7', label: 'Emergency Care' },
+  { num: '15+', label: 'Years of Excellence', icon: Award },
+  { num: '500+', label: 'Expert Doctors', icon: Stethoscope },
+  { num: '1M+', label: 'Patients Treated', icon: Heart },
+  { num: '3', label: 'Hospital Locations', icon: Building2 },
+  { num: '50+', label: 'Specialities', icon: GraduationCap },
+  { num: '24/7', label: 'Emergency Care', icon: Clock },
 ]
 
 const leadership = [
@@ -45,9 +45,27 @@ export default function AboutUs() {
     <section className="about-page">
       {/* Hero Banner */}
       <div className="about-hero">
-        <motion.div className="container" initial="hidden" animate="visible" variants={fadeUp}>
-          <h1 className="about-hero-title">About Yatharth Hospitals</h1>
-          <p className="about-hero-sub">A legacy of trust, innovation, and compassionate care since 2008.</p>
+        <div className="about-hero-bg">
+          <div className="mesh-gradient" />
+          <div className="glow-orb orb-1" />
+          <div className="glow-orb orb-2" />
+        </div>
+        
+        <motion.div 
+          className="container hero-content-wrapper" 
+          initial="hidden" 
+          animate="visible" 
+          variants={fadeUp}
+        >
+          <motion.div className="about-badge" variants={fadeUp}>
+            <span className="badge-line" />
+            <span className="badge-text">LEGACY OF CARE</span>
+            <span className="badge-line" />
+          </motion.div>
+          <h1 className="about-hero-title">
+            About <span className="gradient-text">Yatharth Hospitals</span>
+          </h1>
+          <p className="about-hero-sub">Defining the future of super-speciality healthcare through innovation, empathy, and excellence since 2008.</p>
         </motion.div>
       </div>
 
@@ -56,7 +74,19 @@ export default function AboutUs() {
         <div className="container">
           <div className="about-stats-grid">
             {stats.map((s, i) => (
-              <motion.div key={s.label} className="about-stat" initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i} variants={fadeUp}>
+              <motion.div 
+                key={s.label} 
+                className="about-stat" 
+                initial="hidden" 
+                animate="visible" 
+                custom={i} 
+                variants={fadeUp}
+                whileHover={{ y: -5 }}
+              >
+                <div className="stat-glass-bg" />
+                <div className="stat-icon-wrapper">
+                  <s.icon size={20} className="stat-icon" />
+                </div>
                 <span className="about-stat-num">{s.num}</span>
                 <span className="about-stat-label">{s.label}</span>
               </motion.div>
@@ -66,17 +96,60 @@ export default function AboutUs() {
       </div>
 
       {/* Our Story */}
-      <div className="about-section">
+      <div className="about-section about-story-section">
         <div className="container">
-          <motion.div className="about-story" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-            <h2 className="section-title">Our Story</h2>
-            <p className="about-story-text">
-              Yatharth Hospital & Trauma Care Services was founded with a singular mission: to make world-class healthcare accessible to everyone in the Delhi-NCR region. Starting as a single facility in Noida's Sector 110, we have grown into a premier super-speciality hospital chain with three modern campuses.
-            </p>
-            <p className="about-story-text">
-              Our journey has been defined by relentless innovation — from introducing robotic surgery in the region to standing as COVID warriors during the pandemic. Today, with over 500 expert doctors across 50+ specialities, we continue to set new benchmarks in patient care, clinical outcomes, and medical technology.
-            </p>
+          <motion.div 
+            className="section-header"
+            initial="hidden" 
+            whileInView="visible" 
+            viewport={{ once: true }} 
+            variants={fadeUp}
+          >
+            <h2 className="section-title">Our <span className="gradient-text">Story</span></h2>
+            <p className="section-subtitle">A legacy built on excellence, trust, and relentless innovation.</p>
           </motion.div>
+          
+          <div className="about-story-grid">
+            <motion.div 
+              className="about-story-content"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+            >
+              <p className="about-story-text">
+                Yatharth Hospital & Trauma Care Services was founded with a singular mission: to make world-class healthcare accessible to everyone in the Delhi-NCR region. Starting as a single facility in Noida's Sector 110, we have grown into a premier super-speciality hospital chain with three modern campuses.
+              </p>
+              <p className="about-story-text">
+                Our journey has been defined by relentless innovation — from introducing robotic surgery in the region to standing as COVID warriors during the pandemic. Today, with over 500 expert doctors across 50+ specialities, we continue to set new benchmarks in patient care, clinical outcomes, and medical technology.
+              </p>
+              <motion.div className="about-story-pills" variants={fadeUp}>
+                <span className="story-pill"><ChevronRight size={14} /> 15+ Years Excellence</span>
+                <span className="story-pill"><ChevronRight size={14} /> 5 Million+ Lives Touched</span>
+                <span className="story-pill"><ChevronRight size={14} /> NABH Accredited</span>
+              </motion.div>
+            </motion.div>
+            
+            <motion.div 
+              className="about-story-visual"
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="story-image-container">
+                <img src="/assets/images/yatharth-building.png" alt="Yatharth Hospital Building" />
+                <div className="story-image-overlay" />
+                <div className="story-stat-integrated">
+                  <div className="integrated-glow" />
+                  <Heart className="stat-icon" size={16} />
+                  <span className="integrated-text">
+                    <span className="bold-num">500+</span> Expert Doctors
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
 
@@ -101,10 +174,20 @@ export default function AboutUs() {
       {/* Core Values */}
       <div className="about-section">
         <div className="container">
-          <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>Core Values</motion.h2>
+          <motion.div 
+            className="section-header"
+            initial="hidden" 
+            whileInView="visible" 
+            viewport={{ once: true }} 
+            variants={fadeUp}
+          >
+            <h2 className="section-title">Core <span className="gradient-text">Values</span></h2>
+            <p className="section-subtitle">The foundation of everything we do, every single day.</p>
+          </motion.div>
+          
           <div className="about-values-grid">
             {values.map((v, i) => (
-              <motion.div key={v.title} className="about-value-card" initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i} variants={fadeUp} whileHover={{ y: -6, boxShadow: '0 12px 32px rgba(10,61,98,0.12)' }}>
+              <motion.div key={v.title} className="about-value-card" initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i} variants={fadeUp}>
                 <div className="value-icon"><v.icon size={22} /></div>
                 <h4>{v.title}</h4>
                 <p>{v.desc}</p>
@@ -116,17 +199,42 @@ export default function AboutUs() {
 
       {/* Timeline */}
       <div className="about-section about-timeline-section">
+        <div className="about-timeline-bg" />
         <div className="container">
-          <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>Our Journey</motion.h2>
+          <motion.div 
+            className="section-header"
+            initial="hidden" 
+            whileInView="visible" 
+            viewport={{ once: true }} 
+            variants={fadeUp}
+          >
+            <h2 className="section-title">Our <span className="gradient-text">Journey</span></h2>
+            <p className="section-subtitle">Significant milestones in our quest for healthcare excellence.</p>
+          </motion.div>
+          
           <div className="about-timeline">
+            <div className="timeline-line-glow" />
             {milestones.map((m, i) => (
-              <motion.div key={m.year} className={`timeline-item ${i % 2 === 0 ? 'left' : 'right'}`} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i} variants={fadeUp}>
-                <div className="timeline-dot" />
-                <div className="timeline-card">
+              <motion.div 
+                key={m.year} 
+                className={`timeline-item ${i % 2 === 0 ? 'left' : 'right'}`}
+                initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.7, delay: i * 0.1 }}
+              >
+                <div className="timeline-dot-wrapper">
+                  <div className="timeline-dot" />
+                  <div className="timeline-dot-glow" />
+                </div>
+                <motion.div 
+                  className="timeline-card"
+                  whileHover={{ y: -5, scale: 1.02 }}
+                >
                   <span className="timeline-year">{m.year}</span>
                   <h4>{m.title}</h4>
                   <p>{m.desc}</p>
-                </div>
+                </motion.div>
               </motion.div>
             ))}
           </div>
@@ -136,7 +244,16 @@ export default function AboutUs() {
       {/* Leadership */}
       <div className="about-section">
         <div className="container">
-          <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>Leadership Team</motion.h2>
+          <motion.div 
+            className="section-header"
+            initial="hidden" 
+            whileInView="visible" 
+            viewport={{ once: true }} 
+            variants={fadeUp}
+          >
+            <h2 className="section-title">Leadership <span className="gradient-text">Team</span></h2>
+            <p className="section-subtitle">Meet the visionaries driving our clinical excellence.</p>
+          </motion.div>
           <div className="about-leaders-grid">
             {leadership.map((l, i) => (
               <motion.div key={l.name} className="leader-card" initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i} variants={fadeUp} whileHover={{ y: -4 }}>
