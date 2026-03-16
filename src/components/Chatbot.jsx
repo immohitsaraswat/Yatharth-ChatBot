@@ -56,12 +56,12 @@ async function callGroq(messages) {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${GROQ_API_KEY}`,
     },
-    body: JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
-      messages,
-      temperature: 0.7,
-      max_tokens: 700,
-    }),
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: messages.map(({ role, content }) => ({ role, content })),
+        temperature: 0.7,
+        max_tokens: 700,
+      }),
   })
   if (!res.ok) {
     const err = await res.json().catch(() => ({}))
