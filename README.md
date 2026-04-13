@@ -36,7 +36,7 @@ A premium, modern web application for NextGen Hospitals, featuring an advanced A
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/immohitsaraswat/Yatharth-ChatBot.git
+   git clone https://github.com/immohitsaraswat/Nat-Chatbot.git
    ```
 2. Install dependencies:
    ```bash
