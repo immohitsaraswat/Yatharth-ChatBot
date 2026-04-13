@@ -108,8 +108,8 @@ export default function Chatbot() {
   const chooseLang = (chosen) => {
     setLang(chosen)
     const greeting = chosen === 'hi'
-      ? '👋 नमस्ते! मैं **nat** हूँ, आपकी व्यक्तिगत स्वास्थ्य सहायक।\n\nमैं आपकी अपॉइंटमेंट बुक करने, डॉक्टर खोजने और यथार्थ हॉस्पिटल की जानकारी देने में मदद कर सकता हूँ। आप क्या जानना चाहते हैं?'
-      : '👋 Hello! I\'m **nat**, your personal health assistant.\n\nI can help you book appointments, find doctors, and answer questions about Yatharth Hospitals. How can I help you today?'
+      ? '👋 नमस्ते! मैं **nat** हूँ, आपकी व्यक्तिगत स्वास्थ्य सहायक।\n\nमैं आपकी अपॉइंटमेंट बुक करने, डॉक्टर खोजने और NextGen हॉस्पिटल की जानकारी देने में मदद कर सकता हूँ। आप क्या जानना चाहते हैं?'
+      : '👋 Hello! I\'m **nat**, your personal health assistant.\n\nI can help you book appointments, find doctors, and answer questions about NextGen Hospitals. How can I help you today?'
     setMessages([{ role: 'assistant', content: greeting, time: new Date() }])
   }
 

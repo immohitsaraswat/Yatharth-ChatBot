@@ -1,6 +1,6 @@
-# Yatharth Hospitals - Advanced Medical Assistant & Web Platform
+# NextGen Hospitals - Advanced Medical Assistant & Web Platform
 
-A premium, modern web application for Yatharth Hospitals, featuring an advanced AI-powered health assistant named **"nat"**. This project is a comprehensive upgrade of the traditional hospital website, focusing on premium UI/UX, proactive patient interaction, and seamless information access.
+A premium, modern web application for NextGen Hospitals, featuring an advanced AI-powered health assistant named **"nat"**. This project is a comprehensive upgrade of the traditional hospital website, focusing on premium UI/UX, proactive patient interaction, and seamless information access.
 
 ![nat Mascot Logo](public/nat.png)
 
@@ -12,7 +12,7 @@ A premium, modern web application for Yatharth Hospitals, featuring an advanced 
 
 ## 🚀 Key Features
 - **Multi-Page Experience**:
-    - **About Us**: Comprehensive overview of Yatharth's mission and history.
+    - **About Us**: Comprehensive overview of NextGen's mission and history.
     - **Careers**: Interactive job board with real-time application capabilities.
     - **Facilities**: Visual showcase of world-class medical infrastructure.
     - **Online Lab Reports**: Mock portal for efficient patient document access.

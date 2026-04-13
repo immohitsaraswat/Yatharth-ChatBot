@@ -70,7 +70,7 @@ export default function Careers() {
       <div className="careers-hero">
         <motion.div className="container" initial="hidden" animate="visible" variants={fadeUp}>
           <h1>Join Our Team</h1>
-          <p>Be part of a healthcare revolution. Shape the future of medicine with Yatharth Hospitals.</p>
+          <p>Be part of a healthcare revolution. Shape the future of medicine with NextGen Hospitals.</p>
         </motion.div>
       </div>
 

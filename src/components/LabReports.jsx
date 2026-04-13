@@ -73,7 +73,7 @@ export default function LabReports() {
               <form onSubmit={handleSearch} className="lab-form">
                 <div className="lab-input-group">
                   <label>Patient ID / UHID</label>
-                  <input type="text" placeholder="e.g., YH-2024-12345" value={patientId} onChange={e => setPatientId(e.target.value)} required />
+                  <input type="text" placeholder="e.g., NGH-2024-12345" value={patientId} onChange={e => setPatientId(e.target.value)} required />
                 </div>
                 <div className="lab-input-group">
                   <label>Registered Mobile Number</label>

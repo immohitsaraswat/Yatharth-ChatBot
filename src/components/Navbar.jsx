@@ -80,7 +80,7 @@ export default function Navbar() {
           <div className="nav-inner">
             {/* Logo */}
             <Link to="/" className="nav-logo">
-              <img src="/assets/images/navbar-logo-transparent.png" alt="Yatharth Hospitals" className="nav-logo-img" />
+              <img src="/assets/images/navbar-logo-transparent.png" alt="NextGen Hospitals" className="nav-logo-img" />
             </Link>
 
             {/* Desktop Nav Links */}

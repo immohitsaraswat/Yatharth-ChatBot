@@ -1,10 +1,10 @@
 {
-  "name": "yatharth-chatbot",
+  "name": "nextgen-hospitals",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite\" \"node server/index.js\"",
+    "dev": "vite",
     "build": "vite build",
     "start": "node server/index.js",
     "lint": "eslint .",

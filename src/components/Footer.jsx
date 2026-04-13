@@ -44,7 +44,7 @@ export default function Footer() {
             {/* Brand Column */}
             <div className="footer-brand">
               <div className="footer-logo">
-                <img src="/assets/images/footer-logo-official-v2.png" alt="Yatharth Hospitals" className="footer-logo-img" />
+                <img src="/assets/images/footer-logo-official-v2.png" alt="NextGen Hospitals" className="footer-logo-img" />
               </div>
               <p className="footer-about">
                 A leading super-speciality hospital chain providing world-class medical care across Delhi NCR since 2008. NABH accredited, JCI candidate.
@@ -56,8 +56,8 @@ export default function Footer() {
                 <a href="tel:01204588000" className="footer-contact-item">
                   <Phone size={14} /> 0120-4588000 (Helpline)
                 </a>
-                <a href="mailto:info@yatharthhospitals.com" className="footer-contact-item">
-                  <Mail size={14} /> info@yatharthhospitals.com
+                <a href="mailto:info@nextgenhospitals.com" className="footer-contact-item">
+                  <Mail size={14} /> info@nextgenhospitals.com
                 </a>
               </div>
               <div className="footer-socials">
@@ -115,7 +115,7 @@ export default function Footer() {
       <div className="footer-bottom">
         <div className="container">
           <div className="footer-bottom-inner">
-            <p>© 2025 Yatharth Hospital & Trauma Care – All rights reserved.</p>
+            <p>© 2025 NextGen Hospital & Trauma Care – All rights reserved.</p>
             <div className="footer-legal-links">
               <a href="#">Privacy Policy</a>
               <a href="#">Terms of Use</a>

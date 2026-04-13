@@ -4,7 +4,7 @@ import { Award, Heart, Users, Target, Shield, Clock, Building2, Stethoscope, Gra
 import './AboutUs.css'
 
 const milestones = [
-  { year: '2008', title: 'Founded', desc: 'Yatharth Hospital established in Noida with a vision to deliver world-class healthcare.' },
+  { year: '2008', title: 'Founded', desc: 'NextGen Hospital established in Noida with a vision to deliver world-class healthcare.' },
   { year: '2012', title: 'NABH Accredited', desc: 'Achieved NABH accreditation, a mark of highest quality in Indian healthcare.' },
   { year: '2015', title: 'Greater Noida', desc: 'Expanded with a second super-speciality hospital in Greater Noida.' },
   { year: '2018', title: 'Robotic Surgery', desc: 'Introduced advanced robotic surgery capabilities, a first in the region.' },
@@ -63,7 +63,7 @@ export default function AboutUs() {
             <span className="badge-line" />
           </motion.div>
           <h1 className="about-hero-title">
-            About <span className="gradient-text">Yatharth Hospitals</span>
+            About <span className="gradient-text">NextGen Hospitals</span>
           </h1>
           <p className="about-hero-sub">Defining the future of super-speciality healthcare through innovation, empathy, and excellence since 2008.</p>
         </motion.div>
@@ -118,7 +118,7 @@ export default function AboutUs() {
               variants={fadeUp}
             >
               <p className="about-story-text">
-                Yatharth Hospital & Trauma Care Services was founded with a singular mission: to make world-class healthcare accessible to everyone in the Delhi-NCR region. Starting as a single facility in Noida's Sector 110, we have grown into a premier super-speciality hospital chain with three modern campuses.
+                NextGen Hospital & Trauma Care Services was founded with a singular mission: to make world-class healthcare accessible to everyone in the Delhi-NCR region. Starting as a single facility in Noida's Sector 110, we have grown into a premier super-speciality hospital chain with three modern campuses.
               </p>
               <p className="about-story-text">
                 Our journey has been defined by relentless innovation — from introducing robotic surgery in the region to standing as COVID warriors during the pandemic. Today, with over 500 expert doctors across 50+ specialities, we continue to set new benchmarks in patient care, clinical outcomes, and medical technology.
@@ -138,7 +138,7 @@ export default function AboutUs() {
               transition={{ duration: 0.8 }}
             >
               <div className="story-image-container">
-                <img src="/assets/images/yatharth-building.png" alt="Yatharth Hospital Building" />
+                <img src="/assets/images/nextgen-building.png" alt="NextGen Hospital Building" />
                 <div className="story-image-overlay" />
                 <div className="story-stat-integrated">
                   <div className="integrated-glow" />
